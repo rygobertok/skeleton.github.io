@@ -1,0 +1,47 @@
+<h1>Skeleton Second Line: A Pure CSS Jazz Funeral</h1>
+<h2>A Little Magic from Tappable Stories</h2>
+<p>This pen grew out of something I’ve been building at <a href="https://tappablestories.com">Tappable Stories</a>, where I’m exploring new ways to bring history and storytelling to life.</p>
+<p>One of my favorite techniques is layering interactive elements over video, allowing photographs, characters, documents, and stories to appear right where they belong, without interrupting the experience.</p>
+<p>For this CodePen, I decided to have a little fun with that same idea.</p>
+<p>Instead of bringing history to life, <strong>I’m bringing the dead to life!</strong></p>
+<h2>Welcome to the Big Easy. Even the Dead Know How to Party.</h2>
+<p>After midnight at New Orleans’ Metairie Cemetery, the tomb doors swing open and the Bone Rattlers Social Aid &amp; Pleasure Club comes marching out.</p>
+<p>Six krewes. One brass band. A coffin full of trouble. And enough bats, bones, and bad behavior to wake the dead.</p>
+<p><strong>No JavaScript. Just CSS, a little voodoo, and a whole lotta New Orleans.</strong></p>
+<p>Hit <strong>START THE PARADE</strong>, crank up the volume, and <strong>CUT HIM LOOSE!</strong></p>
+<h2>How the Dead Get Movin’</h2>
+<p><strong>One click wakes the cemetery.</strong></p>
+<p>The START button is a label connected to a hidden checkbox. CSS <code>:has()</code> detects when it’s checked and brings the parade to life. No JavaScript required.</p>
+<p><strong>The video becomes the stage.</strong></p>
+<p>Everything lives inside the same 16:9 frame. Skeletons, bats, crows, and other surprises are positioned using percentages measured against the video itself. That keeps the characters marching along the cemetery paths, even when the screen changes size.</p>
+<p><strong>The skeletons come right at you.</strong></p>
+<p>Each character follows a carefully timed CSS animation, moving out of the tomb, growing larger as it approaches, then disappearing offscreen. A little scaling and perspective turn flat images into a marching parade.</p>
+<p><strong>Every bone has its own rhythm.</strong></p>
+<p>CSS animation delays control when each skeleton, bat, and crow appears. They’re choreographed to the soundtrack: each krewe steps out of its tomb the moment the song calls its name, right down to the final surprise.</p>
+<p><strong>Music without JavaScript? Well, almost magic.</strong></p>
+<p>CSS can’t play audio directly, so the music lives inside a separate HTML page loaded through a lazy-loading iframe. Starting the parade reveals the iframe and triggers the soundtrack. STOP THE BAND switches to a silent page.</p>
+<p><strong>And when the party gets too wild…</strong></p>
+<p>It doesn’t stop. There’s no pause button: CSS can’t pause the music, and a parade that froze while the band played on would just fall out of step. Even the dead can’t stop a New Orleans brass band! STOP THE BAND turns the music off, RESTART starts the whole show over, and HIDE CAPTIONS, a second checkbox, tucks the captions away without losing their place.</p>
+<h2>What’s in the Files?</h2>
+<p>I’ve separated the main pieces so you can poke around without digging through the whole cemetery.</p>
+<ul>
+<li><strong><code>index.html</code></strong> — The cemetery, characters, parade structure, and controls. This is where the whole production comes together.</li>
+<li><strong><code>style.css</code></strong> — The stage, video positioning, interface, buttons, and CSS controls that start the show.</li>
+<li><strong><code>parade.css</code></strong> — Where the real mischief happens: character positions, marching paths, scaling, timing, and special effects.</li>
+<li><strong><code>captions.css</code></strong> — Closed captions for the dead: comedy captions cued to the song and the action, and HIDE CAPTIONS tucks them away without losing the beat.</li>
+<li><strong><code>song.html</code></strong> — The little music player that starts the soundtrack.</li>
+<li><strong><code>song-off.html</code></strong> — A silent page used to stop the band.</li>
+<li><strong><code>script.js</code></strong> — Completely empty. That’s right. Not a single line of JavaScript.</li>
+<li><strong><code>videos/metairie-cemetery.mp4</code></strong> — The looping cemetery background that serves as our stage.</li>
+<li><strong><code>haunt/reaper-scythe.svg</code></strong> — The Grim Reaper, borrowed from the <em>Demon Killer</em> game, who closes the show.</li>
+<li><strong><code>backgrounds/metairie-cemetery-poster.webp</code></strong> — The poster image displayed while the video loads.</li>
+<li><strong><code>music/rattle-them-bones.mp3</code></strong> — The original soundtrack, created with Suno.</li>
+<li><strong><code>screenshot.jpg</code></strong> — A preview of the production.</li>
+</ul>
+<h2>Meet the Krewes</h2>
+<p>The Bone Rattlers and their brass band. The Skull &amp; Bone Gang. Uncle Bones and his jazz funeral. The Baby Dolls. Pumpkin Pete, who just can’t seem to keep his head together. And the goodbye krewe: hooded reapers, a giant skeleton puppet and the Grim Reaper himself, marching everyone back to the tombs until next midnight.</p>
+<p>Some of these characters started life in my earlier <em>Skeleton Second Line</em> pen and <em>Demon Killer</em> game. Apparently, they weren’t ready to retire.</p>
+<h2>One Last Thing…</h2>
+<p>In New Orleans, we bury our dead above ground.</p>
+<p><strong>Apparently, nobody told 'em to stay there.</strong></p>
+<p><em>Laissez les bons temps rouler!</em></p>

@@ -1,0 +1,45 @@
+<!doctype html>
+<!--
+  song-off.html: RATTLE THEM BONES, STOPPED
+  STOP THE BAND on song.html loads this page. It has no <audio>, so the music stops.
+  BRING BACK THE BAND loads song.html again, and the song starts over from the top.
+  Which page is sitting in the player IS the on/off state; nothing else tracks it.
+
+  WHY THE STYLES ARE INLINE
+  This page loads inside the player iframe, and an iframe is a separate document:
+  the cemetery's style.css can't reach in here. So it carries its own small <style>.
+-->
+<html lang="en"><head><meta charset="utf-8"><title>Stopped: Rattle Them Bones</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+<style>
+/* SETTINGS */
+:root{ --bone:#ece3cc; --ink:#0b0b0e; }
+
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+body{font-family:'Press Start 2P',monospace;color:#d8d1c4}
+.bar{height:100%;display:flex;align-items:center;gap:14px;padding:0 14px;
+  background:rgba(8,8,11,.86);border:2px solid var(--bone)}
+.skull{flex:0 0 auto;font:28px/1 Georgia,serif;color:var(--bone)}
+.bob{animation:bob .55s ease-in-out infinite alternate}
+@keyframes bob{to{translate:0 -3px;rotate:6deg}}
+.info{flex:1;min-width:0;line-height:1.6}
+.kicker{display:block;font-size:7px;letter-spacing:1px;color:#a9a294}
+.title{display:block;font-size:10px;color:#f4efe5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{flex:0 0 auto;font:8px/1.4 'Press Start 2P',monospace;letter-spacing:.5px;text-decoration:none;white-space:nowrap;
+  padding:10px 11px;color:var(--ink);background:var(--bone);border:2px solid var(--bone);cursor:pointer}
+.btn:hover{background:#fff;border-color:#fff}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.btn.off{background:transparent;color:var(--bone)}
+.btn.off:hover{background:var(--bone);color:var(--ink)}
+/* a narrow player (phones): media queries here measure the iframe, not the screen */
+@media (max-width:420px){ .bar{gap:9px;padding:0 9px} .skull{font-size:22px} .title{font-size:7px} .kicker{font-size:6px} .btn{font-size:7px;padding:8px 7px} }
+@media (prefers-reduced-motion:reduce){ .bob{animation:none} }
+</style></head>
+<body>
+<div class="bar">
+  <span class="skull" aria-hidden="true">&#9760;</span>
+  <span class="info"><span class="kicker">THE BAND IS RESTING</span><span class="title">RATTLE THEM BONES</span></span>
+  <a class="btn off" href="song.html" aria-label="Turn the music back on">BRING BACK THE BAND</a>
+</div>
+</body></html>

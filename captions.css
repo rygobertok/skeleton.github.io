@@ -1,0 +1,73 @@
+/* captions.css: THE COMEDY CAPTIONS
+   Closed captions for the dead. Every caption is a <p class="cap"> in index.html with two numbers:
+     --in  = when it appears (seconds after START THE PARADE, the same clock as the parade)
+     --for = how long it stays up
+   They all sit in the same spot, invisible. Each one runs its animation ONCE, after waiting
+   --in seconds: fade in, hold, fade out. Before and after its turn it's invisible.
+
+   Three kinds:
+     .sfx   [what you're hearing or seeing], in italics, the way TV captions do it
+     .say   a skeleton talking: the name in <b> (pixel font), then the line
+     .call  the song shouting out a krewe as it steps out of its tomb: bigger, louder
+
+   TO RETIME A CAPTION: change its --in / --for in index.html (SRT 00:01:02,200 = 62.2s).
+
+   HIDE CAPTIONS only fades the whole box out. It never uses display:none, because that would
+   restart every caption's clock; this way they keep counting, and SHOW CAPTIONS brings them
+   back right on the beat.
+
+   They run on the same clock as the parade and the song, from the click. */
+
+.captions{display:none;position:absolute;left:50%;translate:-50% 0;z-index:4;pointer-events:none;
+  bottom:max(38px,7cqh);width:min(92cqw,980px);height:3.4em;
+  font-size:clamp(14px,2.2cqw,28px);transition:opacity .4s ease,visibility .4s}
+.scene:has(#start:checked) .captions{display:block}
+.scene:has(#captions-off:checked) .captions{opacity:0;visibility:hidden}
+
+/* one caption: a closed-caption box */
+.cap{position:absolute;left:50%;bottom:0;translate:-50% 0;margin:0;width:max-content;max-width:100%;
+  padding:.3em .75em .36em;text-align:center;text-wrap:balance;
+  font:400 1em/1.3 Georgia,'Times New Roman',serif;color:#f1ebe0;
+  background:rgba(6,6,10,.8);border:1px solid rgba(236,227,204,.22);
+  text-shadow:0 1px 0 #000;
+  opacity:0;animation:cap-show var(--for) linear var(--in) 1 both}
+.cap.sfx{font-style:italic;color:#d8d1c4}
+/* the speaker's name, the way captions label who's talking */
+.cap.say b{font:400 .48em/1 'Press Start 2P',monospace;letter-spacing:.08em;color:#ece3cc;
+  vertical-align:.32em;margin-right:.7em}
+.cap.say b::after{content:":"}
+/* the krewe shout-outs: no box, bigger, upright, spaced like a banner */
+.cap.call{font-weight:700;font-size:1.4em;letter-spacing:.08em;color:#fff;background:none;border:0;
+  text-shadow:0 2px 0 #000,0 0 18px rgba(0,0,0,.9),0 0 30px rgba(255,240,210,.35);animation-name:cap-call}
+
+/* fade in, hold, fade out */
+@keyframes cap-show{
+  0%{opacity:0;translate:-50% .35em}
+  12%{opacity:1;translate:-50% 0}
+  88%{opacity:1;translate:-50% 0}
+  100%{opacity:0;translate:-50% 0}}
+/* the shout-outs pop in a little bigger */
+@keyframes cap-call{
+  0%{opacity:0;scale:.82;translate:-50% 0}
+  14%{opacity:1;scale:1.06}
+  24%{scale:1}
+  86%{opacity:1;scale:1}
+  100%{opacity:0;scale:1.04}}
+
+/* tall screens (phones): sit just inside the bottom of the cemetery picture, above the controls.
+   (the picture is 200cqw wide, so it's 112.5cqw tall and its bottom edge is 56.25cqw below the middle) */
+@container (max-aspect-ratio: 5/4){
+  .captions{bottom:calc(50cqh - 56.25cqw + 14px);font-size:clamp(13px,4cqw,20px)}
+}
+
+/* THE CAPTIONS BUTTON: same look as RESTART; lit up while the captions are hidden */
+.captions-btn .when-off{display:none}
+.scene:has(#captions-off:checked) .captions-btn{background:#ece3cc;color:#0b0b0e}
+.scene:has(#captions-off:checked) .captions-btn .when-on{display:none}
+.scene:has(#captions-off:checked) .captions-btn .when-off{display:inline}
+.scene:has(#captions-off:focus-visible) .captions-btn{outline:2px solid #fff;outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  .cap,.cap.call{animation-name:cap-still}
+  @keyframes cap-still{0%,100%{opacity:0} 1%,99%{opacity:1}}
+}

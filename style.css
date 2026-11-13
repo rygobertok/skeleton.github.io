@@ -1,0 +1,89 @@
+/* style.css: THE SCENE (layout, title card, player). The skeletons are in parade.css.
+
+   THE STAGE is one 16:9 box that covers the screen like a video would. The video AND the
+   parade live inside it, so anything placed in % lands on the same spot in the video frame,
+   on every screen size. On tall screens (phones) it zooms out to show the path, over a
+   blurred copy of the cemetery. */
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#07070a;color:#e9e4da}
+body{font-family:'Press Start 2P',monospace}
+
+.scene{position:relative;height:100vh;height:100dvh;overflow:hidden;container-type:size}
+.start-switch{position:absolute;opacity:0;pointer-events:none}
+
+.scene-fill{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;filter:blur(18px) brightness(.6);z-index:0}
+
+/* THE STAGE: the bigger of the screen's width, or the width needed to fill its height */
+.stage{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:1;
+  width:max(100cqw, calc(100cqh * 16 / 9));aspect-ratio:16/9;overflow:hidden}
+.stage-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* tall screens: show more of the path instead of a narrow sliver, and fade the edges */
+@container (max-aspect-ratio: 5/4){
+  .stage{width:200cqw;
+    -webkit-mask-image:linear-gradient(transparent, #000 8%, #000 92%, transparent);
+            mask-image:linear-gradient(transparent, #000 8%, #000 92%, transparent)}
+}
+
+/* ---------- ONE CLICK STARTS EVERYTHING ----------
+   The parade isn't drawn until the box is checked. The moment it appears, all its
+   animations start from zero, so every --d delay counts from the click. */
+.parade{display:none;inset:0}
+.scene:has(#start:checked) .parade{display:block}
+
+/* ---------- THE TITLE CARD ---------- */
+.title-card{position:absolute;inset:0;z-index:5;display:grid;place-content:center;justify-items:center;gap:18px;
+  text-align:center;padding:24px;background:radial-gradient(ellipse at center, rgba(6,6,10,.55), rgba(6,6,10,.85));
+  transition:opacity .8s ease, visibility .8s}
+.scene:has(#start:checked) .title-card{opacity:0;visibility:hidden}
+.kicker{margin:0;font-size:clamp(7px,1.1vw,10px);letter-spacing:2px;color:#b9b2a6}
+h1{margin:0;font:700 clamp(30px,6vw,72px)/1.05 Georgia,'Times New Roman',serif;color:#f1ebe0;
+  text-shadow:0 2px 0 #000,0 0 30px rgba(255,240,210,.18)}
+h1 span{display:block;font-size:.55em;letter-spacing:.12em;color:#cfc6b6;margin-top:.15em}
+.start-btn{font:clamp(10px,1.4vw,14px)/1.4 'Press Start 2P',monospace;letter-spacing:1px;cursor:pointer;user-select:none;
+  padding:16px 22px;color:#0b0b0e;background:#ece3cc;border:2px solid #ece3cc;
+  box-shadow:0 0 0 4px rgba(236,227,204,.15),0 0 28px rgba(236,227,204,.25);transition:background .15s, box-shadow .15s}
+.start-btn:hover{background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.18),0 0 38px rgba(255,255,255,.35)}
+.start-switch:focus-visible ~ .title-card .start-btn{outline:2px solid #fff;outline-offset:4px}
+.note{margin:0;font-size:clamp(7px,.9vw,9px);color:#9d968a;letter-spacing:1px}
+
+/* ---------- THE PLAYER ----------
+   Hidden (display:none) until the click. Because it's loading="lazy", the browser doesn't load
+   song.html until it's shown, so showing it is what starts the song. Its look lives in song.html. */
+.controls{display:none;position:absolute;left:50%;translate:-50% 0;top:14px;z-index:6;
+  width:min(780px,94cqw);height:64px;gap:10px}
+.scene:has(#start:checked) .controls{display:flex}
+.player{flex:1;min-width:0;height:100%;border:0;background:transparent}
+/* wide screens: the controls sit in the sky, clear of the path the parade walks.
+   tall screens: right under the stage (its height is 200cqw x 9/16 = 112.5cqw, so half is 56.25cqw) */
+@container (max-aspect-ratio: 5/4){
+  .controls{top:calc(50cqh + 56.25cqw + 14px);height:auto;flex-direction:column}
+  .player{flex:none;width:100%;height:70px}
+  .controls{flex-flow:row wrap}
+  .controls .ctrl-btn{flex:1 1 40%}
+}
+
+/* ---------- THE CONTROL BUTTONS ---------- */
+.ctrl-btn{flex:0 0 auto;display:grid;place-items:center;padding:0 16px;cursor:pointer;user-select:none;
+  font:9px/1.4 'Press Start 2P',monospace;letter-spacing:.5px;white-space:nowrap;
+  color:#ece3cc;background:rgba(8,8,11,.86);border:2px solid #ece3cc;transition:background .15s,color .15s}
+.ctrl-btn:hover{background:#ece3cc;color:#0b0b0e}
+.restart-btn{text-decoration:none}
+.ctrl-btn .when-off{display:none}
+@container (max-aspect-ratio: 5/4){ .ctrl-btn{padding:14px 12px;font-size:8px} }
+
+.credit{position:absolute;right:14px;bottom:10px;margin:0;z-index:6;font-size:8px;letter-spacing:1px;color:#b9b2a6;opacity:.7}
+@media (max-width:520px){ .credit{left:0;right:0;text-align:center} }
+
+/* ---------- THE REPLAY CARD ----------
+   Hidden until the click, then it waits --replay seconds (the length of the show) and fades in.
+   */
+.replay-card{--replay:141s;display:none;position:absolute;inset:0;z-index:7;place-content:center;justify-items:center;gap:16px;
+  text-align:center;padding:24px;background:radial-gradient(ellipse at center, rgba(6,6,10,.45), rgba(6,6,10,.85));
+  animation:replay-in 1.6s ease var(--replay) 1 both}
+.scene:has(#start:checked) .replay-card{display:grid}
+@keyframes replay-in{from{opacity:0;visibility:hidden} to{opacity:1;visibility:visible}}
+.replay-card h2{margin:0;font:700 clamp(34px,6.5vw,78px)/1 Georgia,'Times New Roman',serif;color:#f1ebe0;
+  text-shadow:0 2px 0 #000,0 0 30px rgba(255,240,210,.18)}
+.replay-card .start-btn{text-decoration:none}
+@media (prefers-reduced-motion:reduce){ .replay-card{animation-duration:.01s} }
